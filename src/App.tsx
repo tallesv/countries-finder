@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import SearchInput from './components/SearchInput';
 import './styles/global.css';
 
 function App(): JSX.Element {
-  return <h1>Buzzmonitor Front-end test</h1>;
+  const [textSearched, setTextSearched] = useState('');
+  return (
+    <>
+      <main>
+        <SearchInput onChangeInputValue={setTextSearched} />
+
+        {textSearched}
+      </main>
+    </>
+  );
 }
 
 export default App;
