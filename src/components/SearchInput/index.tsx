@@ -22,11 +22,11 @@ export default function SearchInput({
     <InputGroup className="mb-3">
       <FormControl
         onChange={e => handleInput(e.target.value)}
-        placeholder="Procure por um país"
+        placeholder="Search for a country"
       />
       <InputGroup.Append>
         <Button variant="outline-secondary" onClick={handleSearch}>
-          Procurar
+          Search
         </Button>
       </InputGroup.Append>
     </InputGroup>

@@ -30,7 +30,7 @@ function App(): JSX.Element {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
-  const numberOfCountriesDisplay = 4;
+  const numberOfCountriesDisplay = 12;
 
   function handleSearchItem() {
     const findCountries = allCountries.filter(country =>
@@ -53,7 +53,7 @@ function App(): JSX.Element {
       );
       setAllCountries(countries);
       setFilteredCountries(countries);
-      setTotalPages(countries.length / numberOfCountriesDisplay);
+      setTotalPages(Math.round(countries.length / numberOfCountriesDisplay));
       setIsLoading(false);
     });
   }, []);
@@ -76,38 +76,40 @@ function App(): JSX.Element {
         {filteredCountries.length === 0 && !isLoading ? (
           <div>No country found 😕</div>
         ) : (
-          filteredCountries
-            .slice(
-              (currentPage - 1) * numberOfCountriesDisplay,
-              currentPage * numberOfCountriesDisplay,
-            )
-            .map(country => (
-              <Card key={country.name}>
-                <Card.Body>
-                  <Card.Title className="title">
-                    {country.id + 1} -
-                    <img
-                      src={country.flag}
-                      alt={`${country.flag} flag`}
-                      className="countryFlag"
-                    />
-                    {country.name}
-                  </Card.Title>
-                  <Card.Text>{`Languages: ${country.languages.map(
-                    (language, index) =>
-                      country.languages.length - 1 === index
-                        ? ` ${language.name}.`
-                        : ` ${language.name}`,
-                  )}`}</Card.Text>
-                  <Card.Text>{`Currencies: ${country.currencies.map(
-                    (currency, index) =>
-                      country.currencies.length - 1 === index
-                        ? ` ${currency.name} (${currency.code} ${currency.symbol}).`
-                        : ` ${currency.name} (${currency.code} ${currency.symbol})`,
-                  )}`}</Card.Text>
-                </Card.Body>
-              </Card>
-            ))
+          <section className="content">
+            {filteredCountries
+              .slice(
+                (currentPage - 1) * numberOfCountriesDisplay,
+                currentPage * numberOfCountriesDisplay,
+              )
+              .map(country => (
+                <Card key={country.name}>
+                  <Card.Body>
+                    <Card.Title className="title">
+                      {country.id + 1} -
+                      <img
+                        src={country.flag}
+                        alt={`${country.flag} flag`}
+                        className="countryFlag"
+                      />
+                      {country.name}
+                    </Card.Title>
+                    <Card.Text>{`Languages: ${country.languages.map(
+                      (language, index) =>
+                        country.languages.length - 1 === index
+                          ? ` ${language.name}.`
+                          : ` ${language.name}`,
+                    )}`}</Card.Text>
+                    <Card.Text>{`Currencies: ${country.currencies.map(
+                      (currency, index) =>
+                        country.currencies.length - 1 === index
+                          ? ` ${currency.name} (${currency.code} ${currency.symbol}).`
+                          : ` ${currency.name} (${currency.code} ${currency.symbol})`,
+                    )}`}</Card.Text>
+                  </Card.Body>
+                </Card>
+              ))}
+          </section>
         )}
 
         <Pagination
