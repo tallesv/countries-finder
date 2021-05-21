@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
-import Pagination from 'react-bootstrap/Pagination';
 import Card from 'react-bootstrap/esm/Card';
+import Pagination from './components/Pagination';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
 import './styles/global.css';
@@ -27,6 +28,7 @@ function App(): JSX.Element {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const numberOfCountriesDisplay = 4;
 
   function handleSearchItem() {
     const findCountries = allCountries.filter(country =>
@@ -48,7 +50,7 @@ function App(): JSX.Element {
       );
       setAllCountries(countries);
       setFilteredCountries(countries);
-      setTotalPages(countries.length / 10);
+      setTotalPages(countries.length / numberOfCountriesDisplay);
     });
   }, []);
 
@@ -66,7 +68,10 @@ function App(): JSX.Element {
           <div>No country found 😕</div>
         ) : (
           filteredCountries
-            .slice((currentPage - 1) * 10, currentPage * 10)
+            .slice(
+              (currentPage - 1) * numberOfCountriesDisplay,
+              currentPage * numberOfCountriesDisplay,
+            )
             .map(country => (
               <Card key={country.name}>
                 <Card.Body>
@@ -96,18 +101,15 @@ function App(): JSX.Element {
             ))
         )}
 
-        <Pagination>
-          <Pagination.First disabled={currentPage === 1} />
-          <Pagination.Prev disabled={currentPage === 1} />
-          <Pagination.Item active activeLabel="">
-            1
-          </Pagination.Item>
-          <Pagination.Item>2</Pagination.Item>
-          <Pagination.Item>3</Pagination.Item>
-          <Pagination.Item>4</Pagination.Item>
-          <Pagination.Next />
-          <Pagination.Last />
-        </Pagination>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onSelectFirstPage={() => setCurrentPage(1)}
+          onSelectPreviousPage={setCurrentPage}
+          onSelectPage={setCurrentPage}
+          onSelectNextPage={setCurrentPage}
+          onSelectLastPage={() => setCurrentPage(totalPages)}
+        />
       </main>
     </>
   );
