@@ -55,3 +55,25 @@ main {
   margin: 0 auto;
   padding: 0 2rem;
 }
+
+main img {
+  width: 30px;
+  margin: 0 0.6rem;
+}
+
+
+main > .card {
+  margin-top: 1.5rem;
+}
+
+main > div > div > .card-title {
+  display: flex;
+  align-items: center;
+}
+
+
+main > .pagination {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
