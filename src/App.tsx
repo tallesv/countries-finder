@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/esm/Card';
+import Spinner from 'react-bootstrap/Spinner';
 import Pagination from './components/Pagination';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
@@ -28,6 +29,7 @@ function App(): JSX.Element {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
   const numberOfCountriesDisplay = 4;
 
   function handleSearchItem() {
@@ -41,6 +43,7 @@ function App(): JSX.Element {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     api.get('/all').then(response => {
       const countries = response.data.map(
         (country: Country, index: number) => ({
@@ -51,6 +54,7 @@ function App(): JSX.Element {
       setAllCountries(countries);
       setFilteredCountries(countries);
       setTotalPages(countries.length / numberOfCountriesDisplay);
+      setIsLoading(false);
     });
   }, []);
 
@@ -64,7 +68,12 @@ function App(): JSX.Element {
           onClickButton={handleSearchItem}
         />
 
-        {filteredCountries.length === 0 ? (
+        {isLoading && (
+          <div className="loading">
+            <Spinner animation="border" variant="primary" />
+          </div>
+        )}
+        {filteredCountries.length === 0 && !isLoading ? (
           <div>No country found 😕</div>
         ) : (
           filteredCountries

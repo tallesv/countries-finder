@@ -61,6 +61,10 @@ main img {
   margin: 0 0.6rem;
 }
 
+main > .loading {
+  display: flex;
+  justify-content: center;
+}
 
 main > .card {
   margin-top: 1.5rem;
