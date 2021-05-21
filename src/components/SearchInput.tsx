@@ -16,12 +16,10 @@ export default function SearchInput({
     <InputGroup className="mb-3">
       <FormControl
         onChange={e => handleInput(e.target.value)}
-        placeholder="Recipient's username"
-        aria-label="Recipient's username"
-        aria-describedby="basic-addon2"
+        placeholder="Procure por um país"
       />
       <InputGroup.Append>
-        <Button variant="outline-secondary">Button</Button>
+        <Button variant="outline-secondary">Procurar</Button>
       </InputGroup.Append>
     </InputGroup>
   );
