@@ -1,0 +1,17 @@
+.header {
+  background-color: var(--blue-header);
+  padding: 0 2rem;
+  margin-bottom: 2rem;
+}
+
+.header > a {
+  color: var(--gray) !important;
+  display: flex;
+  align-items: center;
+}
+
+.header > a > img {
+  width: 30px;
+  height: 30px;
+  margin-right: 0.8rem;
+}
