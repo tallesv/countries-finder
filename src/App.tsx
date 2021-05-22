@@ -32,11 +32,34 @@ function App(): JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
   const numberOfCountriesDisplay = 12;
 
-  function handleSearchItem() {
+  function handleSearchByName() {
     const findCountries = allCountries.filter(country =>
       country.name
         .toLocaleLowerCase()
         .includes(textSearched.toLocaleLowerCase()),
+    );
+
+    setCurrentPage(1);
+    setTotalPages(Math.round(findCountries.length / numberOfCountriesDisplay));
+    setFilteredCountries(findCountries);
+  }
+
+  function handleSearchByLanguage() {
+    const findCountries = allCountries.filter(country =>
+      country.languages.find(language =>
+        language.name?.toLowerCase().includes(textSearched.toLowerCase()),
+      ),
+    );
+    setCurrentPage(1);
+    setTotalPages(Math.round(findCountries.length / numberOfCountriesDisplay));
+    setFilteredCountries(findCountries);
+  }
+
+  function handleSearchByCurrency() {
+    const findCountries = allCountries.filter(country =>
+      country.currencies.find(currency =>
+        currency.name?.toLocaleLowerCase().includes(textSearched.toLowerCase()),
+      ),
     );
     setCurrentPage(1);
     setTotalPages(Math.round(findCountries.length / numberOfCountriesDisplay));
@@ -66,9 +89,11 @@ function App(): JSX.Element {
       <main>
         <SearchInput
           onChangeInputValue={setTextSearched}
-          onClickButton={handleSearchItem}
+          onSearchCountryName={handleSearchByName}
+          onSearchCountryLanguage={handleSearchByLanguage}
+          onSearchCountryCurrency={handleSearchByCurrency}
         />
-        {totalPages}
+
         {isLoading && (
           <div className="loading">
             <Spinner animation="border" variant="primary" />
