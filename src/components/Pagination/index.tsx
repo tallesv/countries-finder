@@ -20,6 +20,56 @@ export default function Pagination({
   onSelectLastPage,
   onSelectNextPage,
 }: PaginationProps): JSX.Element {
+  if (totalPages < 2) {
+    return (
+      <BootstrapPagination>
+        <BootstrapPagination.Item disabled>1</BootstrapPagination.Item>
+      </BootstrapPagination>
+    );
+  }
+
+  if (totalPages >= 2 && totalPages < 6) {
+    const pageItens = [];
+    for (let page = 1; page < totalPages + 1; page += 1) {
+      pageItens.push(
+        <BootstrapPagination.Item
+          key={page}
+          active={page === currentPage}
+          activeLabel=""
+          onClick={() => onSelectPage(page)}
+        >
+          {page}
+        </BootstrapPagination.Item>,
+      );
+    }
+    return (
+      <BootstrapPagination>
+        <BootstrapPagination.Item
+          disabled={currentPage === 1}
+          onClick={() => onSelectFirstPage()}
+        >
+          &laquo;
+        </BootstrapPagination.Item>
+        <BootstrapPagination.Prev
+          disabled={currentPage === 1}
+          onClick={() => onSelectPreviousPage(currentPage - 1)}
+        />
+        {pageItens}
+        <BootstrapPagination.Next
+          disabled={currentPage === totalPages}
+          onClick={() => onSelectNextPage(currentPage + 1)}
+        />
+
+        <BootstrapPagination.Item
+          disabled={currentPage === totalPages}
+          onClick={() => onSelectLastPage()}
+        >
+          &raquo;
+        </BootstrapPagination.Item>
+      </BootstrapPagination>
+    );
+  }
+
   return (
     <BootstrapPagination>
       <BootstrapPagination.Item
@@ -29,7 +79,6 @@ export default function Pagination({
         &laquo;
       </BootstrapPagination.Item>
       <BootstrapPagination.Prev
-        aria-label="<"
         disabled={currentPage === 1}
         onClick={() => onSelectPreviousPage(currentPage - 1)}
       />

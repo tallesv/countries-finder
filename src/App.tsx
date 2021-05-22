@@ -39,6 +39,7 @@ function App(): JSX.Element {
         .includes(textSearched.toLocaleLowerCase()),
     );
     setCurrentPage(1);
+    setTotalPages(Math.round(findCountries.length / numberOfCountriesDisplay));
     setFilteredCountries(findCountries);
   }
 
@@ -67,7 +68,7 @@ function App(): JSX.Element {
           onChangeInputValue={setTextSearched}
           onClickButton={handleSearchItem}
         />
-
+        {totalPages}
         {isLoading && (
           <div className="loading">
             <Spinner animation="border" variant="primary" />
