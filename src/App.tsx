@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
-import Card from 'react-bootstrap/esm/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import Pagination from './components/Pagination';
 import Header from './components/Header';
 import SearchInput from './components/SearchInput';
 import './styles/global.css';
 import api from './services/api';
+import CountryCard from './components/CountryCard';
 
 interface Country {
   id: string;
@@ -16,9 +16,9 @@ interface Country {
     name: string;
   }[];
   currencies: {
-    name: string;
-    code: string;
-    symbol: string;
+    name: string | null;
+    code: string | null;
+    symbol: string | null;
   }[];
 }
 
@@ -85,7 +85,6 @@ function App(): JSX.Element {
   return (
     <>
       <Header />
-
       <main>
         <SearchInput
           onChangeInputValue={setTextSearched}
@@ -109,31 +108,7 @@ function App(): JSX.Element {
                 currentPage * numberOfCountriesDisplay,
               )
               .map(country => (
-                <Card key={country.name}>
-                  <Card.Body>
-                    <Card.Title className="title">
-                      {country.id + 1} -
-                      <img
-                        src={country.flag}
-                        alt={`${country.flag} flag`}
-                        className="countryFlag"
-                      />
-                      {country.name}
-                    </Card.Title>
-                    <Card.Text>{`Languages: ${country.languages.map(
-                      (language, index) =>
-                        country.languages.length - 1 === index
-                          ? ` ${language.name}.`
-                          : ` ${language.name}`,
-                    )}`}</Card.Text>
-                    <Card.Text>{`Currencies: ${country.currencies.map(
-                      (currency, index) =>
-                        country.currencies.length - 1 === index
-                          ? ` ${currency.name} (${currency.code} ${currency.symbol}).`
-                          : ` ${currency.name} (${currency.code} ${currency.symbol})`,
-                    )}`}</Card.Text>
-                  </Card.Body>
-                </Card>
+                <CountryCard key={country.id} country={country} />
               ))}
           </section>
         )}

@@ -86,15 +86,9 @@ main > section {
 
 
 main > section > .card {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   width: 100%;
 }
-
-main > div > div > .card-title {
-  display: flex;
-  align-items: center;
-}
-
 
 main > .pagination {
   margin-top: 1.5rem;
